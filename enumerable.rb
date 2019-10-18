@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# module
+# module enum
 module Enumerable
   def bubble_sort(array)
     (array.size - 1).times do |x|
