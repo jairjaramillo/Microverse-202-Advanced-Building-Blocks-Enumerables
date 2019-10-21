@@ -12,40 +12,110 @@ module Enumerable
     array
   end
 
-  test_array = [4, 3, 78, 2, 0, 2]
-  print bubble_sort(test_array)
-  puts
-
   def bubble_sort_by(arra)
     (arra.size - 1).times do |x|
-      if yield(arra[x], arra[x + 1]).positive?
-        arra[x], arra[x + 1] = arra[x + 1], arra[x]
-      end
+      arra[x], arra[x + 1] = arra[x + 1], arra[x] if yield(arra[x], arra[x + 1]).positive?
     end
     (arra.size - 1).times do |x|
-      if arra[x].length - arra[x + 1].length > 0
-        bubble_sort_by(arra) do |left, right|
-          yield(arra[x], arra[x + 1])
-        end
+      next unless (arra[x].length - arra[x + 1].length).positive?
+
+      bubble_sort_by(arra) do |_left, _right|
+        yield(arra[x], arra[x + 1])
       end
     end
     arra
   end
 
-  def my_each
-    i = 0
-    while i < self.to_a.length
-      yield self.to_a[i]
-      i += 1
+  def my_each(counter = 0)
+    while counter < to_a.length
+      yield to_a[counter]
+      counter += 1
     end
   end
 
-  def my_all? (pattern = false)
-    if !pattern == true
-      self.my_each{|item| return false if (pattern === item) == false}
+  def my_each_with_index(counter = 0)
+    while counter < to_a.length
+      yield to_a[counter], counter
+      counter += 1
+    end
+  end
+
+  def my_select
+    result = []
+    i = 0
+    while i < to_a.length
+      result << to_a[i] if yield to_a[i]
+      i += 1
+    end
+    result
+  end
+
+  def my_all?(pattern = false)
+    if block_given?
+      my_each { |item| return false if !(yield item) == false }
+    elsif !pattern == true
+      my_each { |item| return false if (pattern == item) == false }
     else
-      self.my_each{|item| return false if !!item == false}
+      my_each { |item| return false unless item == false }
     end
     true
   end
+
+  def my_any?(pattern = false)
+    if block_given?
+      my_each { |item| return true if yield item }
+    elsif !pattern == true
+      my_each { |item| return true if pattern == item }
+    else
+      my_each { |item| return true unless item }
+    end
+    false
+  end
+
+  def my_none?(pattern = false)
+    if block_given?
+      my_each { |item| return false if yield item }
+    elsif !pattern == true
+      my_each { |item| return false if pattern == item }
+    else
+      my_each { |item| return false unless item }
+    end
+    true
+  end
+
+  def my_count(pattern = false)
+    count = 0
+    if block_given?
+      my_each { |item| count += 1 if yield item }
+    elsif !pattern == true
+      my_each { |item| count += 1 if pattern == item }
+    else
+      my_each { |item| count += 1 unless item }
+    end
+    count
+  end
+
+  def my_map(proc = nil)
+    result = []
+    to_a.my_each do |item|
+      if proc
+        result.push(proc.call(item))
+      elsif block_given?
+        result.push(yield item)
+      end
+    end
+    result
+  end
+
+  def my_inject(init = nil, &block)
+    return to_a[1..-1].my_inject(first, &block) if init.nil?
+
+    addition = init
+    my_each { |item| addition = yield addition, item } if block_given?
+    addition
+  end
+end
+
+def multiply_els(arra)
+  arra.my_inject{ |accum, item| accum * item }
 end
