@@ -50,6 +50,8 @@ module Enumerable
   end
 
   def my_select
+    return to_enum unless block_given?
+
     result = []
     i = 0
     while i < to_a.length
