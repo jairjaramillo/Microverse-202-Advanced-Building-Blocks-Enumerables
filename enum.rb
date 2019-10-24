@@ -107,6 +107,8 @@ module Enumerable
   end
 
   def my_map(proc = nil)
+    return to_enum unless block_given?
+
     result = []
     to_a.my_each do |item|
       if proc
