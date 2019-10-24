@@ -61,7 +61,7 @@ module Enumerable
     result
   end
 
-  def my_all?(pattern = false)
+  def my_all?(pattern = nil)
     if block_given?
       my_each { |x| return false unless yield(x) }
     elsif pattern.class == Class
@@ -76,7 +76,7 @@ module Enumerable
     true
   end
 
-  def my_any?(pattern = false)
+  def my_any?(pattern = nil)
     if block_given?
       my_each { |x| return true if yield(x) }
     elsif pattern.class == Class
@@ -91,7 +91,7 @@ module Enumerable
     false
   end
 
-  def my_none?(pattern = false)
+  def my_none?(pattern = nil)
     if block_given?
       my_each { |x| return false if yield(x) }
     elsif pattern.class == Class
@@ -106,7 +106,7 @@ module Enumerable
     true
   end
 
-  def my_count(things = false)
+  def my_count(things = nil)
     counter = 0
     if block_given?
       my_each { |x| counter += 1 if yield(x) == true }
