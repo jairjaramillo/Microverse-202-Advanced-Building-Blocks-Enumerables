@@ -39,7 +39,10 @@ module Enumerable
     end
   end
 
-  def my_each_with_index(counter = 0)
+  def my_each_with_index
+    return to_enum unless block_given?
+
+    counter = 0
     while counter < to_a.length
       yield to_a[counter], counter
       counter += 1
