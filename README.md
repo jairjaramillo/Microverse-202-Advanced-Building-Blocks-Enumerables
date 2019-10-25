@@ -1,6 +1,6 @@
-# Microverse-201-Advanced-Building-Blocks-Bubble-Sort
+# Microverse-202-Advanced-Building-Blocks-Enumerables
 
-This is the 1st project of the Main Ruby curriculum at [Microverse](https://www.microverse.org)
+This is the 2st project of the Main Ruby curriculum at [Microverse](https://www.microverse.org)
 
 >Sorting algorithms are some of the earliest that you typically get exposed to in Computer Science. It may not be immediately obvious how important they are, but it shouldn’t be hard to think of some examples where your computer needs to sort some massive datasets during everyday operations.
 
@@ -10,8 +10,8 @@ This is the 1st project of the Main Ruby curriculum at [Microverse](https://www.
 
 Contributor:
 
-* Collins Ugwu: [Github](https://github.com/collinsugwu)
-
+<!-- * Collins Ugwu: [Github](https://github.com/collinsugwu) -->
+<!--  -->
 * Jair Jaramillo: [Github](https://github.com/jairjy), [Twitter](https://twitter.com/jairjy)
 
 Github Link:
